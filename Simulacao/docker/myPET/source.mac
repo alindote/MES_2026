@@ -1,0 +1,34 @@
+# In this simplified example, the source will be
+# two 511 keV gammas emitted back-to-back
+#
+/gate/source/addSource twogamma
+/gate/source/twogamma/setActivity 100. becquerel
+/gate/source/twogamma/setType backtoback
+# PARTICLE
+/gate/source/twogamma/gps/particle gamma
+/gate/source/twogamma/gps/ene/type Mono
+/gate/source/twogamma/gps/ene/mono 0.511 MeV
+
+# The emission will be uniform in a cylinder
+# with 3 cm in z and 0.5 mm radius
+# POSITION
+/gate/source/twogamma/gps/pos/centre 0. 0. 0. cm
+# TYPE = Volume or Surface
+/gate/source/twogamma/gps/pos/type Volume
+# SHAPE = Sphere or Cylinder
+/gate/source/twogamma/gps/pos/shape Cylinder
+/gate/source/twogamma/gps/pos/radius 0.5 mm
+/gate/source/twogamma/gps/pos/halfz 15 mm
+
+
+# SET THE ANGULAR DISTRIBUTION OF EMISSION - Isotropic
+/gate/source/twogamma/gps/ang/type iso
+# SET MIN AND MAX EMISSION ANGLES
+/gate/source/twogamma/gps/ang/mintheta 0. deg
+/gate/source/twogamma/gps/ang/maxtheta 180. deg
+/gate/source/twogamma/gps/ang/minphi    0. deg
+/gate/source/twogamma/gps/ang/maxphi 360. deg
+# ATTACH THE SOURCE TO THE PHANTOM VOLUME
+/gate/source/twogamma/attachTo my_phantom
+# LIST DEFINED SOURCES
+/gate/source/list

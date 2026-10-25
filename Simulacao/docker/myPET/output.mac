@@ -1,0 +1,18 @@
+# Gate can output the data in ASCII (text, .dat extension)
+# and ROOT formats
+
+# ROOT OUTPUT FORMAT
+/gate/output/root/enable
+/gate/output/root/setFileName myPET
+# Save the singles and coincidences
+/gate/output/root/setRootSinglesFlag 1
+/gate/output/root/setRootCoincidencesFlag 1
+
+# ASCII OUTPUT FORMAT
+#/gate/output/ascii/enable
+#/gate/output/ascii/setFileName myPET
+# Do not save information on individual hits
+#/gate/output/ascii/setOutFileHitsFlag 0
+# Save the singles and coincidences
+#/gate/output/ascii/setOutFileSinglesFlag 1
+#/gate/output/ascii/setOutFileCoincidencesFlag 1

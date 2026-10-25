@@ -1,0 +1,28 @@
+# Use O-15, a positron emitting source
+
+/gate/source/addSource O15Source
+/gate/source/O15Source/setActivity 10000. becquerel
+
+/gate/source/O15Source/gps/particle e+
+/gate/source/O15Source/setForcedUnstableFlag true
+/gate/source/O15Source/setForcedHalfLife 122.24 s
+/gate/source/O15Source/gps/energytype Oxygen15
+
+# The emission will be uniform in a cylinder
+# with 3 cm in z and 0.5 mm radius
+# POSITION
+/gate/source/O15Source/gps/pos/centre 0. 0. 0. cm
+# TYPE = Volume or Surface
+/gate/source/O15Source/gps/pos/type Volume
+# SHAPE = Sphere or Cylinder
+/gate/source/O15Source/gps/pos/shape Cylinder
+/gate/source/O15Source/gps/pos/radius 0.5 mm
+/gate/source/O15Source/gps/pos/halfz 15 mm
+# ATTACH THE SOURCE TO THE PHANTOM VOLUME
+/gate/source/O15Source/attachTo my_phantom
+
+# SET THE ANGULAR DISTRIBUTION OF EMISSION - Isotropic
+/gate/source/O15Source/gps/ang/type iso
+
+# LIST DEFINED SOURCES
+/gate/source/list

@@ -1,0 +1,56 @@
+# set materials database
+/gate/geometry/setMaterialDatabase GateMaterials.db
+
+# define the world volume
+/gate/world/geometry/setXLength 40. cm
+/gate/world/geometry/setYLength 40. cm
+/gate/world/geometry/setZLength 40. cm
+
+# P E T   S Y S T E M
+# start defining the PET geometry
+# The name of the first daughter of the world has a specific meaning and name.
+# It specifies the type of scanner to be simulated
+/gate/world/daughters/name cylindricalPET
+/gate/world/daughters/insert cylinder
+/gate/cylindricalPET/setMaterial Water
+/gate/cylindricalPET/geometry/setRmax 100 mm
+/gate/cylindricalPET/geometry/setRmin 86 mm
+/gate/cylindricalPET/geometry/setHeight 18 mm
+# uncomment the next line if needed to make the blocks visible
+#/gate/cylindricalPET/vis/forceWireframe
+
+# The PET will be composed by 30 blocks (block), each
+# containing 8x8 LSO crystals
+# NOTE that these are daughters of cylindricalPET, not of the world
+# We create one block first
+/gate/cylindricalPET/daughters/name block
+/gate/cylindricalPET/daughters/insert box
+/gate/block/placement/setTranslation 91. 0 0 mm
+/gate/block/geometry/setXLength 10. mm
+/gate/block/geometry/setYLength 17.75 mm
+/gate/block/geometry/setZLength 17.75 mm
+/gate/block/setMaterial Water
+/gate/block/vis/setColor yellow
+# uncomment the next line if needed to make the crystals visible
+#/gate/block/vis/forceWireframe
+
+# Now let's make one crystal
+/gate/block/daughters/name crystal
+/gate/block/daughters/insert box
+/gate/crystal/geometry/setXLength 10. mm
+/gate/crystal/geometry/setYLength 2. mm
+/gate/crystal/geometry/setZLength 2. mm
+/gate/crystal/setMaterial LSO
+/gate/crystal/vis/setColor red
+#/gate/crystal/vis/forceWireframe
+# And repeat it to get 8x8 in each block
+/gate/crystal/repeaters/insert cubicArray
+/gate/crystal/cubicArray/setRepeatNumberX 1
+/gate/crystal/cubicArray/setRepeatNumberY 8
+/gate/crystal/cubicArray/setRepeatNumberZ 8
+/gate/crystal/cubicArray/setRepeatVector 0. 2.25 2.25 mm
+
+# Now we can position 30 blocks around the ring
+/gate/block/repeaters/insert ring
+/gate/block/ring/setRepeatNumber 30
+

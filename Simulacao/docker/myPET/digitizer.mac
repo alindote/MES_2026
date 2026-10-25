@@ -1,0 +1,33 @@
+# The basic output of Gate is a hit collection in which data
+# such as the position, the time and the energy of each hit
+# are stored. The history of a particle is thus registered
+# through all the hits generated along its track. The goal
+# of the digitizer is to build physical observables from the
+# hits and to model readout schemes and trigger logics.
+
+# Let's insert an adder to sum the hits generated per
+# elementary volume (each single crystal)
+/gate/digitizer/Singles/insert adder
+
+# And a readout for the sensitive volumes. This readout
+# sums all the energy deposited in a crystal
+# NOTE that depth = 0 (CylindricalPET), 1 (block), 2 (crystal)
+/gate/digitizer/Singles/insert readout
+/gate/digitizer/Singles/readout/setDepth 1
+
+# We can also include energy resolution, with a Gaussian smearing
+# In this case, 19% at 511 keV (NOTE that this is FWHM)
+/gate/digitizer/Singles/insert blurring
+/gate/digitizer/Singles/blurring/setResolution 0.19
+/gate/digitizer/Singles/blurring/setEnergyOfReference 511. keV
+
+# And define an energy window for coincidences
+# Here we will only use energy deposition from 350-650 keV
+# to look for coincidences
+/gate/digitizer/Singles/insert thresholder
+/gate/digitizer/Singles/thresholder/setThreshold 350. keV
+/gate/digitizer/Singles/insert upholder
+/gate/digitizer/Singles/upholder/setUphold 650. keV
+
+# Finally, set the time window for coincidences
+/gate/digitizer/Coincidences/setWindow 10. ns

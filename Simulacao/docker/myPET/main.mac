@@ -1,0 +1,54 @@
+# This is the main macro. It just calls other macros to control the simulation flow
+
+# Step 1 - Define the geometry
+/control/execute geometry_step1.mac
+
+# Step 2 - Define the physics
+#/control/execute physics.mac
+
+# Step 3 - Initialize the simulation
+# This initialization triggers the calculation of the
+# cross section tables. After this step, the physics
+# list cannot be modified and new volumes cannot be
+# inserted into the geometry.
+/gate/run/initialize
+
+# Optional step - Create a VRML2 file with the geometry
+#/control/execute vis.mac
+
+# Step 4 - Define the digitizers (what is saved for analysis)
+#/control/execute digitizer.mac
+
+# Step 5 - Define the primary particles
+#/control/execute source.mac
+
+# Step 6 - Define the output
+#/control/execute output.mac
+
+# Step 7 - Finally, let's start the run!
+# You can use a fixed number of events (similar to GEANT4)
+/gate/application/setTotalNumberOfPrimaries 10
+# Or set a certain run time. In this case GATE will use the source activity
+#/gate/application/setTimeStart     0.  s
+#/gate/application/setTimeStop      10.  s
+# Gate can also divide the simulation into time slices. If the
+# user defined movement for the detector or phantom or
+# if a radioactive source is defined, these are recalculated
+# after each slice, being kept constant during the slice.
+#/gate/application/setTimeSlice     1.  s
+
+# Oh, we also need to define the initial seed for the random
+# number generator
+# default - CLHEP internal seed (always the same)
+#/gate/random/setEngineSeed default
+# auto - uses internal clock and Gate process ID (always different)
+#/gate/random/setEngineSeed auto
+# or set manually
+/gate/random/setEngineSeed 123456789
+
+# We can also select the random number generator
+# Ranlux64, JamesRandom, or MersenneTwister (default)
+#/gate/random/setEngineName MersenneTwister
+
+# S T A R T  the  A C Q U I S I T I O N
+/gate/application/startDAQ

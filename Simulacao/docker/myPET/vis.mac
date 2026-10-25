@@ -1,0 +1,21 @@
+# The Gate version that comes in the docker image does not include
+# support for OpenGL or Qt. So for now we're stuck with VRML2 files
+/vis/open VRML2FILE
+
+# Draw the world
+/vis/drawVolume
+# Draw coordinate axes:
+/vis/scene/add/axes 0 0 0 20 cm
+
+# Draw smooth trajectories at end of event, showing trajectory points
+# as markers 2 pixels wide:
+/vis/scene/add/trajectories smooth
+/vis/modeling/trajectories/create/drawByCharge
+/vis/modeling/trajectories/drawByCharge-0/default/setDrawStepPts true
+/vis/modeling/trajectories/drawByCharge-0/default/setStepPtsSize 1
+
+# To superimpose all of the events from a given run:
+/vis/scene/endOfEventAction accumulate
+
+# refresh to create the .wrl geometry file
+/vis/viewer/flush

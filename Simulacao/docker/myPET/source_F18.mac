@@ -1,0 +1,27 @@
+# Use F-18, a positron emitting source
+
+/gate/source/addSource F18Source
+/gate/source/F18Source/setActivity 1. becquerel
+#/gate/source/F18Source/setActivity 100000. becquerel
+
+/gate/source/F18Source/gps/particle e+
+/gate/source/F18Source/setForcedUnstableFlag true
+/gate/source/F18Source/setForcedHalfLife 6586.2 s
+/gate/source/F18Source/gps/energytype Fluor18
+
+# The emission will be uniform in a cylinder
+# with 3 cm in z and 0.5 mm radius
+# POSITION
+/gate/source/F18Source/gps/centre 0. 0. 0. cm
+# TYPE = Volume or Surface
+/gate/source/F18Source/gps/type Volume
+# SHAPE = Sphere or Cylinder
+/gate/source/F18Source/gps/shape Cylinder
+/gate/source/F18Source/gps/radius 0.5 mm
+/gate/source/F18Source/gps/halfz 15 mm
+
+
+# SET THE ANGULAR DISTRIBUTION OF EMISSION - Isotropic
+/gate/source/F18Source/gps/angtype iso
+
+/gate/source/list
